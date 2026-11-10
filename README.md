@@ -1,6 +1,26 @@
-This program estimates the annual property tax in Fulton county based on:
-1) Fulton county's assessment ratio (40%)
-2) The tax mills rate for Unincorporated and Atlanta is 26.989 mills (0.026989) and 40.709 mills (0.040709), respectively
-3) The home's sale price
-4) ***This is an estimate and not a real tax bill***
-5) Rates are for the 2025 tax year, from Georgia Department of Revenue: https://dor.georgia.gov/local-government-services/digest-compliance/property-tax-millage-rates
+# Deal Risk Analyzer
+
+Estimates the returns and risks of buying a rental property in metro Atlanta, starting with Fulton County.
+
+## What it can do so far
+- Property tax estimate, using Fulton County's 40% assessment ratio and sourced millage rates
+- Mortgage payment and remaining loan balance
+- One-year deal numbers: NOI, cash flow, DSCR, cap rate, and cash-on-cash return
+- Five-year cash flows including the sale, total profit, and IRR
+
+## How to run the tests
+    cd deal-risk-analyzer
+    source .venv/bin/activate
+    python -m pytest -v
+
+## Data sources
+Millage rates are for the 2025 tax year, from the Georgia Department of Revenue:
+https://dor.georgia.gov/local-government-services/digest-compliance-section/property-tax-millage-rates
+
+| Area | Total mills |
+| --- | --- |
+| Unincorporated Fulton County | 26.989 |
+| City of Atlanta (Fulton County) | 40.709 |
+
+## Disclaimer
+These are estimates, not real tax bills, appraisals, or investment advice.

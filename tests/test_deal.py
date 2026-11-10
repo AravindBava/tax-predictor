@@ -31,7 +31,7 @@ def test_dscr():
 
 
 def test_cap_rate():
-    assert analyze_year(TEST_DEAL)["cap_rate"] == approx(.0594, abs=0.005)
+    assert analyze_year(TEST_DEAL)["cap_rate"] == approx(.0594, abs=0.00005)
 
 
 def test_cash_in():
@@ -39,5 +39,5 @@ def test_cash_in():
 
 
 def test_coc():
-    assert analyze_year(TEST_DEAL)["coc"] == approx(-.0192, abs=0.01)
+    assert analyze_year(TEST_DEAL)["coc"] == approx(-.0192, abs=0.0001)
 
