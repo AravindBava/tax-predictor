@@ -9,3 +9,5 @@ def remaining_balance(loan, annual_rate, years, months_paid):
     p = monthly_payment(loan, annual_rate, years)
     balance = float(loan*((1+r)**months_paid)-(p * ((1+r)**months_paid-1))/r)
     return balance
+
+
