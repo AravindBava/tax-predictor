@@ -1,6 +1,7 @@
 from mortgage import monthly_payment
 
 TEST_DEAL = {
+    "address": "Practice deal",
     "price": 300000,
     "down_pct": 0.20,
     "closing_pct": 0.03,

@@ -1,0 +1,6 @@
+address,county,city,price,monthly_rent,insurance,rate,down_pct,closing_pct,years,vacancy,repairs_pct,mgmt_pct,listing_url
+166 Polar Rock Rd SW,Fulton,Atlanta,190000,1700,1164,0.079,0.20,0.03,30,0.05,0.09,0.08,https://www.redfin.com/GA/Atlanta/166-Polar-Rock-Rd-SW-30315/home/24607323
+1087 Redford Dr SE,Fulton,Atlanta,199500,1750,1212,0.079,0.20,0.03,30,0.05,0.08,0.08,https://www.redfin.com/GA/Atlanta/1087-Redford-Dr-SE-30315/home/24685457
+2175 Bicknell St SW,Fulton,Atlanta,243000,1800,1380,0.079,0.20,0.03,30,0.05,0.08,0.08,https://www.redfin.com/GA/Atlanta/2175-Bicknell-St-SW-30315/home/24805317
+1145 Booker Ave SW,Fulton,Atlanta,259900,1900,1380,0.079,0.20,0.03,30,0.05,0.08,0.08,https://www.redfin.com/GA/Atlanta/1145-Booker-Ave-SW-30310/home/24807394
+1900 Rogers Ave SW,Fulton,Atlanta,325000,1950,1692,0.079,0.20,0.03,30,0.05,0.07,0.08,https://www.redfin.com/GA/Atlanta/1900-Rogers-Ave-SW-30310/home/24692264

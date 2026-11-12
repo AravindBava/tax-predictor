@@ -22,8 +22,8 @@ def run_simulation(deal, n=10000, seed=42, risks=RISKS):
     first_year = []
     for sim in range(n):
         rent = draw(rng, *risks["rent"])
-        vacancy = draw(rng, *risks["vacancy"])
-        repairs = draw(rng, *risks["repairs"])
+        vacancy = draw(rng, *risks["vacancy"]) + (deal["vacancy"] - risks["vacancy"][1])
+        repairs = draw(rng, *risks["repairs"]) + (deal["repairs_pct"] - risks["repairs"][1])
         tax = draw(rng, *risks["tax"])
         appreciation = draw(rng, *risks["appreciation"])
 

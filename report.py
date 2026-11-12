@@ -1,5 +1,7 @@
 import textwrap
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.backends.backend_pdf import PdfPages
 from simulate import RISKS, run_simulation, summarize
 
 # Plain-English names for the report
@@ -52,7 +54,7 @@ def rank_risks(deal, risks=RISKS):
     return sorted(swings.items(), key=lambda item: item[1], reverse=True)
 
 
-def make_report(deal, path):
+def make_report(deal, comps, path):
     # Get the numbers
     profits, first_year = run_simulation(deal)
     s = summarize(profits, first_year)
@@ -64,9 +66,10 @@ def make_report(deal, path):
 
     # Title and the one-sentence answer (Step 6)
     fig.text(0.08, 0.95, "Deal Risk Report", fontsize=22, weight="bold")
+    fig.text(0.08, 0.925, deal["address"], fontsize=11, color="gray")
     answer = (f"This deal has about a {s['loss_chance']:.0%} chance of losing money "
               f"over five years, and its result depends most on {top_risk}.")
-    fig.text(0.08, 0.89, textwrap.fill(answer, 75), fontsize=13)
+    fig.text(0.08, 0.87, textwrap.fill(answer, 75), fontsize=13)
 
     # Summary numbers
     fig.text(0.08, 0.83, "Five-year results from 10,000 simulations", fontsize=12, weight="bold")
@@ -115,5 +118,50 @@ def make_report(deal, path):
     fig.text(0.08, 0.04, "Estimate for educational purposes. Not an appraisal or investment advice.",
              fontsize=9, color="gray")
 
-    fig.savefig(path)
+    # Save page 1 and the comps page into one PDF
+    comps_fig = comps_page(deal, comps)
+    with PdfPages(path) as pdf:
+        pdf.savefig(fig)
+        pdf.savefig(comps_fig)
     plt.close(fig)
+    plt.close(comps_fig)
+
+
+def comps_page(deal, comps):
+    fig = plt.figure(figsize=(8.5, 11))
+    fig.text(0.08, 0.95, "Rent Comps", fontsize=22, weight="bold")
+    fig.text(0.08, 0.925, deal["address"], fontsize=11, color="gray")
+
+    if len(comps) == 0:
+        fig.text(0.08, 0.86, "No comps yet. Add rows for this address to comps.csv.", fontsize=12)
+        return fig
+
+    # How the report's rent compares with the comps
+    rents = []
+    for comp in comps:
+        rents.append(comp["rent"])
+    fig.text(0.08, 0.87, f"Rent used in this report: ${deal['monthly_rent']:,.0f}/month", fontsize=12)
+    fig.text(0.08, 0.845, f"Middle of {len(comps)} comps: ${np.median(rents):,.0f}/month", fontsize=12)
+
+    # Column headings, each at its own x position
+    columns = [("Address", 0.08), ("Rent", 0.42), ("Beds/baths", 0.52), ("Sq ft", 0.65),
+               ("Built", 0.74), ("Miles", 0.83)]
+    for name, x in columns:
+        fig.text(x, 0.79, name, fontsize=10, weight="bold")
+
+    # One row per comp, with its notes on a smaller line underneath
+    y = 0.76
+    for comp in comps:
+        fig.text(0.08, y, comp["comp_address"], fontsize=10)
+        fig.text(0.42, y, f"${comp['rent']:,.0f}", fontsize=10)
+        fig.text(0.52, y, f"{comp['beds']}/{comp['baths']}", fontsize=10)
+        fig.text(0.65, y, comp["sqft"], fontsize=10)
+        fig.text(0.74, y, comp["year_built"], fontsize=10)
+        fig.text(0.83, y, comp["miles"], fontsize=10)
+        if comp["notes"] != "":
+            fig.text(0.08, y - 0.018, comp["notes"], fontsize=8, color="gray")
+        y = y - 0.045
+
+    fig.text(0.08, 0.04, "Rents are asking prices from current listings, not signed leases.",
+             fontsize=9, color="gray")
+    return fig
